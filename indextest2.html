@@ -1,0 +1,85 @@
+<script src="https://cdn.jsdelivr.net/gh/aframevr/aframe@1c2407b26c61958baa93967b5412487cd94b290b/dist/aframe-master.min.js"></script>
+
+<!--<script src='https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js'></script>-->
+<script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar-nft.js"></script>
+
+<script>
+            AFRAME.registerComponent('play-pause', {
+                init: function () {
+                    var myVideo = document.querySelector('#vid');
+                    var videoControls = document.querySelector('#videoControls');
+                    this.el.addEventListener('click', function () {
+                        if (myVideo.paused) {
+                            myVideo.play();
+                            videoControls.setAttribute('src', '#pause');
+                        } else {
+                            myVideo.pause();
+                            videoControls.setAttribute('src', '#play');
+                        }
+                    });
+                }
+            });
+</script>
+
+<style>
+    .arjs-loader {
+        height: 100%;
+        width: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        background-color: rgba(0, 0, 0, 0.8);
+        z-index: 9999;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .arjs-loader div {
+        text-align: center;
+        font-size: 1.25em;
+        color: white;
+    }
+</style>
+
+<body style='margin : 0px; overflow: hidden;'>
+    <div class="arjs-loader">
+        <div>Loading, please wait...</div>
+    </div>
+    <a-scene
+        vr-mode-ui="enabled: false;"
+        renderer='antialias: true; alpha: true; precision: medium;'
+        embedded arjs='trackingMethod: best; sourceType: webcam; debugUIEnabled: false;'>
+
+        <a-assets>
+            <img id="play" src="White-Play-Silhoutte-PNG-File-Download-Free.png">
+            <img id="pause" src="61039.png">
+            <video 
+                id="vid"
+                src="final%20seinfeld%20%E2%80%94%20%D1%81%D0%B4%D0%B5%D0%BB%D0%B0%D0%BD%D0%BE%20%D0%B2%20Clipchamp.mp4"
+                preload="auto"
+            ></video>
+        </a-assets>
+        <a-camera>
+            <a-cursor></a-cursor>
+        </a-camera>
+
+        <a-nft
+            videohandler
+            type='nft' url='./rframe'
+            smooth="true" smoothCount="10" smoothTolerance="0.01" smoothThreshold="5"
+        >
+            <a-video
+                src="#vid"
+                position='180 0 -100'
+                rotation='100 0 180'
+                width='384'
+                height='288'
+                >
+                <a-image id="videoControls" src="#play" position="0 -200 0" scale="100 100 0" play-pause>
+                </a-image>
+            </a-video>
+        </a-nft>
+		<a-entity camera></a-entity>
+	</a-scene>
+</body>
